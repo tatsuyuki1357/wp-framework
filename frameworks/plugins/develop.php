@@ -199,7 +199,7 @@ class WpDevUtil {
      * @return string
      */
     private function format_sql_for_html ( string $sql ) {
-        return preg_replace( '#(\sFROM|WHERE|AND|OR|\sORDER\sBY|LIMIT\s)#i', '<br/>${1}', $sql );
+        return preg_replace( '#\s(FROM|WHERE|AND|OR|ORDER\sBY|LIMIT)\s#i', '<br/>${1} ', $sql );
     }
 }
 
