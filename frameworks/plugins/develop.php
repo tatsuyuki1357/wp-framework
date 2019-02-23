@@ -24,11 +24,15 @@ class WpDevUtil {
     private const ADMIN_BAR_SQL_ID = 'sql';
     // 開発者情報に表示されるエラー情報の識別子
     private const ADMIN_BAR_ERROR_ID = 'error';
+    // 開発者情報に表示されるテンプレート情報の識別子
+    private const ADMIN_BAR_TEMPLATE_ID = 'template';
 
     // 処理計測タイマー開始時の時刻を記録
     private $timer_start = null;
     // 実際に処理にかかったミリ秒数を記録
     private $timer       = null;
+    // 読み込みテンプレート格納
+    private $template    = null;
 
     public function __construct () {
         // 開発者メニューをカスタマイズCSSの為の処理
@@ -43,6 +47,8 @@ class WpDevUtil {
         add_filter( 'posts_results',   [ $this, 'timer_end' ], 1, 2 );
         // あまりないケースだが、posts_resultsのフィルターを通る前に処理が返されてしまった場合、計測処理を終了する処理
         add_filter( 'wp',              [ $this, 'timer_end_wp' ], 1, 1 );
+        // テンプレート取得
+        add_filter( 'template_include', [ $this, 'set_template' ], 9999, 1 );
     }
 
     /**
@@ -99,6 +105,17 @@ class WpDevUtil {
     }
 
     /**
+     * テーマに設定されるテンプレートを設定する
+     *
+     * @param string $template テーマに読み込まれるテンプレートパス
+     * @return string テンプレート
+     */
+    public function set_template ( $template ) {
+        $this->template = $template;
+        return $template;
+    }
+
+    /**
      * アドミニバーに開発者情報を表示する処理を行う
      *
      * @param WP_Admin_Bar $wp_admin_bar WP_Admin_Barのインスタンス, passed by reference
@@ -107,6 +124,9 @@ class WpDevUtil {
         $this->init_develop_menu( $wp_admin_bar );
         $this->add_sql_menu( $wp_admin_bar );
         $this->add_error_menu( $wp_admin_bar );
+        if ( ! is_admin() ) {
+            $this->add_template_menu( $wp_admin_bar );
+        }
     }
 
     /**
@@ -163,6 +183,26 @@ class WpDevUtil {
             'parent' => self::ADMIN_BAR_ID,
             'id'     => self::ADMIN_BAR_ERROR_ID,
             'title'  => $error_msg,
+        ]);
+    }
+
+    /**
+     * アドミニバーの開発者情報に読み込みテンプレート情報を追加する
+     *
+     * @param WP_Admin_Bar $wp_admin_bar WP_Admin_Barのインスタンス, passed by reference
+     */
+    private function add_template_menu ( $wp_admin_bar ) {
+
+        // テンプレートが特定できなかった時のメッセージ
+        $template = 'unknown template.';
+        if ($this->template) {
+            $template = $this->template;
+        }
+
+        $wp_admin_bar->add_menu([
+            'parent' => self::ADMIN_BAR_ID,
+            'id'     => self::ADMIN_BAR_TEMPLATE_ID,
+            'title'  => sprintf( 'template: %s', $template ),
         ]);
     }
 
