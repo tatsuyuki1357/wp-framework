@@ -5,10 +5,21 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  *
  */
 
+define( 'TOP_POST_TYPE',     'top' );
 define( 'BOOK_POST_TYPE',    'book' );
 define( 'PRODUCT_POST_TYPE', 'product' );
 
 return [
+    TOP_POST_TYPE => [
+        'args' => [
+            'labels' => [
+                'name' => 'TOP'
+            ],
+            'show_ui'            => true,
+            'show_in_menu'       => true,
+            'show_in_rest'       => true,
+        ]
+    ],
     BOOK_POST_TYPE => [
         'args' => [
             'labels' => [

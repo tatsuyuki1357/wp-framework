@@ -22,7 +22,7 @@ class Admin {
      *  投稿一覧テーブルのnavエリアに現在時刻を表示する
      *
      *  @param string $post_type 投稿タイプ名
-     *  @param string $which     リストテーブルに対しtえ追加マークアップを行う場所 'top' or 'bottom'
+     *  @param string $which     リストテーブルに対して追加マークアップを行う場所 'top' or 'bottom'
      */
     public function add_time_field ( $post_type, $which ) {
         if ( 'post' === $post_type ) {

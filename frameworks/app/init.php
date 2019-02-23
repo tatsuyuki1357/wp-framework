@@ -39,6 +39,7 @@ class Init {
             'query_var'          => false,
             'hierarchical'       => false,
             'supports'           => ['title', 'editor'],
+            'show_in_rest'       => true,
         ];
         foreach ( $settings as $post_type => $args ) {
             register_post_type( $post_type , array_merge($defaults, $args['args']) );

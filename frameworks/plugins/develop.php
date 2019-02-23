@@ -126,7 +126,7 @@ class WpDevUtil {
      *
      * @param WP_Admin_Bar $wp_admin_bar WP_Admin_Barのインスタンス, passed by reference
      */
-    private function add_sql_menu ( &$wp_admin_bar ) {
+    private function add_sql_menu ( $wp_admin_bar ) {
         global $wp_query;
 
         // メインクエリが定義されていない時のメッセージ
@@ -147,7 +147,7 @@ class WpDevUtil {
      *
      * @param WP_Admin_Bar $wp_admin_bar WP_Admin_Barのインスタンス, passed by reference
      */
-    private function add_error_menu ( &$wp_admin_bar ) {
+    private function add_error_menu ( $wp_admin_bar ) {
 
         $error_msg = '<span class="no-error">No errors exist.</span>';
         $last_error = error_get_last();
