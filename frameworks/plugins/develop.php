@@ -1,5 +1,5 @@
 <?php
-namespace YuyaTajima;
+namespace YuyaTajima\Wp;
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
