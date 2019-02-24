@@ -35,12 +35,6 @@ class WpDevUtil {
     private $template    = null;
 
     public function __construct () {
-        // 開発者メニューをカスタマイズCSSの為の処理
-        add_action( 'wp_head',            [ $this, 'add_styles_for_admin_bar' ], 10 );
-        add_action( 'admin_print_styles', [ $this, 'add_styles_for_admin_bar' ], 10 );
-
-        // アドミニバーに開発者メニューを表示する処理
-        add_action( 'admin_bar_menu',  [ $this, 'admin_bar_develop_menu' ], 85 );
         // 計測時間を開始する処理
         add_filter( 'posts_pre_query', [ $this, 'timer_start' ], 9999, 2 );
         // 計測時間を終了する処理
@@ -49,6 +43,11 @@ class WpDevUtil {
         add_filter( 'wp',              [ $this, 'timer_end_wp' ], 1, 1 );
         // テンプレート取得
         add_filter( 'template_include', [ $this, 'set_template' ], 9999, 1 );
+        // 開発者メニューをカスタマイズCSSの為の処理
+        add_action( 'wp_head',            [ $this, 'add_styles_for_admin_bar' ], 10 );
+        add_action( 'admin_print_styles', [ $this, 'add_styles_for_admin_bar' ], 10 );
+        // アドミニバーに開発者メニューを表示する処理
+        add_action( 'admin_bar_menu',  [ $this, 'admin_bar_develop_menu' ], 85 );
     }
 
     /**
